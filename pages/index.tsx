@@ -5,7 +5,7 @@ import getConfig from "next/config";
 import styles from "../styles/Home.module.css";
 
 const {
-  publicRuntimeConfig: { SPOONACULAR_KEY, SPOONACULAR_SEARCH },
+  publicRuntimeConfig: { SPOONACULAR_KEY, CACHED_SPOONACULAR_SEARCH },
 } = getConfig();
 
 interface Recipe {
@@ -22,19 +22,15 @@ interface Recipe {
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
-  /*   const getRecipes = async () => {
-    const response = await axios.get(SPOONACULAR_SEARCH, {
+  const getRecipes = async () => {
+    const response = await axios(CACHED_SPOONACULAR_SEARCH, {
       params: {
         apiKey: SPOONACULAR_KEY,
-        number: 5,
+        query: "apple",
       },
     });
     setRecipes(response.data.results);
   };
-
-  useEffect(() => {
-    getRecipes();
-  }, []); */
 
   return (
     <div className={styles.container}>
@@ -46,6 +42,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Spoonacular App 🥄</h1>
+        <button onClick={getRecipes}>Get recipes</button>
         {recipes.length &&
           recipes.map((recipe: Recipe) => (
             <div key={recipe.id}>
