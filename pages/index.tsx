@@ -5,6 +5,7 @@ import getConfig from "next/config";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import SearchPanel from "../components/searchPanel";
+import storageWorker from '../utils/storageWorker'
 
 const {
   publicRuntimeConfig: { SPOONACULAR_KEY, CACHED_SPOONACULAR_SEARCH },
@@ -24,6 +25,7 @@ interface Recipe {
 export default function Home() {
   const [query, setQuery] = useState<string>("");
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [lastSearches, setLastSearches] = useState<string[]>([])
 
   const router = useRouter();
 
@@ -36,6 +38,7 @@ export default function Home() {
         },
       });
       setRecipes(response.data.results);
+      setLastSearches(storageWorker(query, lastSearches))
       router.push(
         {
           pathname: "/",
@@ -46,9 +49,14 @@ export default function Home() {
         undefined,
         { shallow: true }
       );
-    };
+    }; 
     if (query) getRecipes();
   }, [query]);
+
+  useEffect(() => {
+    const lastRequests = JSON.parse(window.localStorage.getItem('spoonacularLastTen')) || [];
+    setLastSearches(lastRequests)
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -60,6 +68,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Spoonacular App 🥄</h1>
+        {lastSearches.length ? lastSearches.map((searchedItem, i) => <p key={`${searchedItem}-${i}`}>{searchedItem}</p>) : null}
         <SearchPanel setQuery={setQuery} />
         {recipes.length
           ? recipes.map((recipe: Recipe) => (
