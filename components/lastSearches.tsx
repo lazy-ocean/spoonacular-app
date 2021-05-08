@@ -6,7 +6,7 @@ interface Props {
 
 const LastSearches: React.FC<Props> = ({ lastSearchedItems }) => {
   return (
-    <Box bg="green.50" padding="8" borderRadius="md" border="1px" borderColor="gray.200">
+    <Box bg="green.50" padding="8" borderLeftRadius="md" border="1px" borderColor="gray.200">
       <Heading marginBottom="3">Last searched:</Heading>
       {lastSearchedItems.length ? (
         lastSearchedItems.map((searchedItem, i) => (

@@ -1,4 +1,4 @@
-import Recipe from "../../utils/types";
+import { Recipe } from "../../utils/types";
 import { Box, Heading, Image, Flex, Text } from "@chakra-ui/react";
 
 interface Props {
@@ -51,10 +51,5 @@ const RecipeCard: React.FC<Props> = ({ recipe }) => {
     </Box>
   );
 };
-
-/* calories: 521,
-carbs: "69g",
-fat: "10g",
-protein: "35g", */
 
 export default RecipeCard;

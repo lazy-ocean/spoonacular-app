@@ -6,23 +6,49 @@ import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import SearchPanel from "../components/searchPanel";
 import LastSearches from "../components/lastSearches";
-import RecipesList from "../components/recipes/recipesList";
+import ResultsList from "../components/resultBlocks/list";
 import storageWorker from "../utils/storageWorker";
-import Recipe from "../utils/types";
+import { Recipe, Ingredient } from "../utils/types";
 import { Flex, Container, Heading } from "@chakra-ui/react";
 
 const {
-  publicRuntimeConfig: { SPOONACULAR_KEY, CACHED_SPOONACULAR_SEARCH },
+  publicRuntimeConfig: { SPOONACULAR_KEY, CACHED_SPOONACULAR_INGREDIENTS, SPOONACULAR_SEARCH },
 } = getConfig();
 
 export default function Home() {
   const [query, setQuery] = useState<string>("");
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [lastSearchedItems, setLastSearchedItems] = useState<string[]>([]);
 
   const router = useRouter();
 
   useEffect(() => {
+    const getIngredients = async () => {
+      const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
+        params: {
+          metaInformation: true,
+          apiKey: SPOONACULAR_KEY,
+          query,
+        },
+      });
+      setIngredients(response.data.results);
+      setLastSearchedItems(storageWorker(query, lastSearchedItems));
+      router.push(
+        {
+          pathname: "/",
+          query: {
+            query,
+          },
+        },
+        undefined,
+        { shallow: true }
+      );
+    };
+    if (query) getIngredients();
+  }, [query]);
+
+  /*   useEffect(() => {
     const getRecipes = async () => {
       const response = await axios(CACHED_SPOONACULAR_SEARCH, {
         params: {
@@ -46,9 +72,10 @@ export default function Home() {
       );
     };
     if (query) getRecipes();
-  }, [query]);
+  }, [query]); */
 
   useEffect(() => {
+    localStorage.clear();
     const lastRequests = JSON.parse(window.localStorage.getItem("spoonacularLastTen")) || [];
     setLastSearchedItems(lastRequests);
   }, []);
@@ -75,10 +102,11 @@ export default function Home() {
       <main>
         <Container maxWidth="1640px">
           <SearchPanel setQuery={setQuery} />
-          <Container marginBottom="8">
+          <Flex marginBottom="8">
             <LastSearches lastSearchedItems={lastSearchedItems} />
-          </Container>
-          <RecipesList recipes={recipes} />
+            <ResultsList items={ingredients} type="ingredients" />
+          </Flex>
+          <ResultsList items={recipes} type="recipes" />
         </Container>
       </main>
     </div>
