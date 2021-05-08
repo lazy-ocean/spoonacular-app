@@ -6,12 +6,13 @@ interface Props {
 }
 
 const RecipeCard: React.FC<Props> = ({ recipe }) => {
-  const { image, title, calories, carbs, fat, protein } = recipe;
+  const { image, title, nutrition } = recipe;
+  const { caloricBreakdown } = nutrition;
+  const { percentCarbs, percentFat, percentProtein } = caloricBreakdown;
   const mealParams = [
-    { label: "calories", value: calories },
-    { label: "carbs", value: carbs },
-    { label: "fat", value: fat },
-    { label: "protein", value: protein },
+    { label: "carbs", value: percentCarbs },
+    { label: "fat", value: percentFat },
+    { label: "protein", value: percentProtein },
   ];
   return (
     <Box
@@ -38,9 +39,9 @@ const RecipeCard: React.FC<Props> = ({ recipe }) => {
         </Heading>
         <Flex gridGap="8">
           {mealParams.map(({ label, value }) => (
-            <Flex flexDirection="column">
+            <Flex flexDirection="column" key={`recipe-${label}`}>
               <Heading color="green.800" as="h5" size="md">
-                {value}
+                {value}%
               </Heading>
               <Text>{label}</Text>
             </Flex>

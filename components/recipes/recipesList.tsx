@@ -8,6 +8,7 @@ interface Props {
 }
 
 const RecipesList: React.FC<Props> = ({ recipes }) => {
+  console.log(recipes);
   const workingRecipes = recipes.length ? recipes : exampleRecipes;
   return (
     <Container

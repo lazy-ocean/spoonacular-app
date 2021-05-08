@@ -28,6 +28,7 @@ export default function Home() {
         params: {
           apiKey: SPOONACULAR_KEY,
           query,
+          addRecipeNutrition: true,
         },
       });
       setRecipes(response.data.results);
@@ -38,7 +39,6 @@ export default function Home() {
           pathname: "/",
           query: {
             query,
-            number: 10,
           },
         },
         undefined,
