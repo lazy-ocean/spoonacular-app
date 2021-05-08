@@ -1,4 +1,4 @@
-import { Container, Heading, Text, Link } from "@chakra-ui/react";
+import { Box, Heading, Text, Link } from "@chakra-ui/react";
 
 interface Props {
   lastSearchedItems: string[];
@@ -6,14 +6,7 @@ interface Props {
 
 const LastSearches: React.FC<Props> = ({ lastSearchedItems }) => {
   return (
-    <Container
-      maxW="30%"
-      bg="green.50"
-      padding="8"
-      borderRadius="md"
-      border="1px"
-      borderColor="gray.200"
-    >
+    <Box bg="green.50" padding="8" borderRadius="md" border="1px" borderColor="gray.200">
       <Heading marginBottom="3">Last searched:</Heading>
       {lastSearchedItems.length ? (
         lastSearchedItems.map((searchedItem, i) => (
@@ -26,7 +19,7 @@ const LastSearches: React.FC<Props> = ({ lastSearchedItems }) => {
       ) : (
         <Text fontSize="md">Try searching something!</Text>
       )}
-    </Container>
+    </Box>
   );
 };
 

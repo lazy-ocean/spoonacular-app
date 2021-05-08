@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormControl, Input, Button } from "@chakra-ui/react";
+import { Flex, Input, Button } from "@chakra-ui/react";
 
 interface Props {
   setQuery: (query: string) => void;
@@ -15,11 +15,18 @@ const SearchPanel: React.FC<Props> = ({ setQuery }) => {
 
   return (
     <form onSubmit={submitSearch}>
-      <Input
-        placeholder="Type your ingredient"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setIngredient(e.target.value)}
-      />
-      <Button type="submit">Search recipes</Button>
+      <Flex marginBottom="8">
+        <Input
+          size="lg"
+          shadow="md"
+          marginRight="5"
+          placeholder="Type your ingredient"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setIngredient(e.target.value)}
+        />
+        <Button size="lg" colorScheme="green" type="submit">
+          Search recipes
+        </Button>
+      </Flex>
     </form>
   );
 };

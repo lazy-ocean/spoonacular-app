@@ -72,13 +72,13 @@ export default function Home() {
           Spoonacular App 🥄
         </Heading>
       </Flex>
-      <main className={styles.main}>
+      <main>
         <Container maxWidth="1640px">
           <SearchPanel setQuery={setQuery} />
-          <Flex gridGap="10">
-            {/* <LastSearches lastSearchedItems={lastSearchedItems} /> */}
-            <RecipesList recipes={recipes} />
-          </Flex>
+          <Container marginBottom="8">
+            <LastSearches lastSearchedItems={lastSearchedItems} />
+          </Container>
+          <RecipesList recipes={recipes} />
         </Container>
       </main>
     </div>
