@@ -31,12 +31,13 @@ export default function Home() {
         },
       });
       setRecipes(response.data.results);
+
       setLastSearchedItems(storageWorker(query, lastSearchedItems));
       router.push(
         {
           pathname: "/",
           query: {
-            ingredients: query,
+            query,
             number: 10,
           },
         },
@@ -75,7 +76,7 @@ export default function Home() {
         <Container maxWidth="1640px">
           <SearchPanel setQuery={setQuery} />
           <Flex gridGap="10">
-            <LastSearches lastSearchedItems={lastSearchedItems} />
+            {/* <LastSearches lastSearchedItems={lastSearchedItems} /> */}
             <RecipesList recipes={recipes} />
           </Flex>
         </Container>
