@@ -5,27 +5,20 @@ import getConfig from "next/config";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import SearchPanel from "../components/searchPanel";
-import storageWorker from '../utils/storageWorker'
+import LastSearches from "../components/lastSearches";
+import RecipesList from "../components/recipes/recipesList";
+import storageWorker from "../utils/storageWorker";
+import Recipe from "../utils/types";
+import { Flex, Container, Heading } from "@chakra-ui/react";
 
 const {
   publicRuntimeConfig: { SPOONACULAR_KEY, CACHED_SPOONACULAR_SEARCH },
 } = getConfig();
 
-interface Recipe {
-  id: number;
-  calories: number;
-  carbs: string;
-  fat: string;
-  image: string;
-  imageType: string;
-  protein: string;
-  title: string;
-}
-
 export default function Home() {
   const [query, setQuery] = useState<string>("");
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [lastSearches, setLastSearches] = useState<string[]>([])
+  const [lastSearchedItems, setLastSearchedItems] = useState<string[]>([]);
 
   const router = useRouter();
 
@@ -35,28 +28,30 @@ export default function Home() {
         params: {
           apiKey: SPOONACULAR_KEY,
           query,
+          addRecipeNutrition: true,
         },
       });
       setRecipes(response.data.results);
-      setLastSearches(storageWorker(query, lastSearches))
+
+      setLastSearchedItems(storageWorker(query, lastSearchedItems));
       router.push(
         {
           pathname: "/",
           query: {
-            ingredients: query,
+            query,
           },
         },
         undefined,
         { shallow: true }
       );
-    }; 
+    };
     if (query) getRecipes();
   }, [query]);
 
   useEffect(() => {
-    const lastRequests = JSON.parse(window.localStorage.getItem('spoonacularLastTen')) || [];
-    setLastSearches(lastRequests)
-  }, [])
+    const lastRequests = JSON.parse(window.localStorage.getItem("spoonacularLastTen")) || [];
+    setLastSearchedItems(lastRequests);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -65,19 +60,26 @@ export default function Home() {
         <meta name="description" content="Fetching data from Spoonacular API with Next.js" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>Spoonacular App 🥄</h1>
-        {lastSearches.length ? lastSearches.map((searchedItem, i) => <p key={`${searchedItem}-${i}`}>{searchedItem}</p>) : null}
-        <SearchPanel setQuery={setQuery} />
-        {recipes.length
-          ? recipes.map((recipe: Recipe) => (
-              <div key={recipe.id}>
-                <h3>{recipe.title}</h3>
-                <img src={recipe.image} alt={recipe.title} />
-              </div>
-            ))
-          : null}
+      <Flex
+        width="100%"
+        as="header"
+        padding="1.5rem"
+        bg="green.500"
+        color="white"
+        marginBottom="1rem"
+      >
+        <Heading as="h1" className={styles.title}>
+          Spoonacular App 🥄
+        </Heading>
+      </Flex>
+      <main>
+        <Container maxWidth="1640px">
+          <SearchPanel setQuery={setQuery} />
+          <Container marginBottom="8">
+            <LastSearches lastSearchedItems={lastSearchedItems} />
+          </Container>
+          <RecipesList recipes={recipes} />
+        </Container>
       </main>
     </div>
   );
