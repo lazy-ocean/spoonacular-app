@@ -75,8 +75,11 @@ export default function Home() {
   }, [query]); */
 
   useEffect(() => {
-    localStorage.clear();
-    const lastRequests = JSON.parse(window.localStorage.getItem("spoonacularLastTen")) || [];
+    let lastRequests = [];
+    if (window.localStorage.getItem("spoonacularLastTen") !== null) {
+      let item = window.localStorage.getItem("spoonacularLastTen") || "";
+      lastRequests = JSON.parse(item);
+    }
     setLastSearchedItems(lastRequests);
   }, []);
 
@@ -103,7 +106,7 @@ export default function Home() {
         <Container maxWidth="1640px">
           <SearchPanel setQuery={setQuery} />
           <Flex marginBottom="8">
-            <LastSearches lastSearchedItems={lastSearchedItems} />
+            <LastSearches lastSearchedItems={lastSearchedItems} setQuery={setQuery} />
             <ResultsList items={ingredients} type="ingredients" />
           </Flex>
           <ResultsList items={recipes} type="recipes" />

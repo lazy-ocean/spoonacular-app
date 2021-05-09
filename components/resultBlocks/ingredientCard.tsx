@@ -6,7 +6,6 @@ interface Props {
 }
 
 const IngredientCard: React.FC<Props> = ({ ingredient }) => {
-  console.log(ingredient);
   const { image, name } = ingredient;
   return (
     <Box
@@ -19,9 +18,9 @@ const IngredientCard: React.FC<Props> = ({ ingredient }) => {
       paddingRight="3"
     >
       <Image
-        src={`https://spoonacular.com/cdn/ingredients_500x500/${image}`}
+        src={`https://spoonacular.com/cdn/ingredients_100x100/${image}`}
         alt={name}
-        boxSize="150px"
+        boxSize="100px"
         objectFit="cover"
         borderRadius="md"
         marginRight="5"

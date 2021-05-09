@@ -11,6 +11,7 @@ const SearchPanel: React.FC<Props> = ({ setQuery }) => {
   const submitSearch = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setQuery(ingredient);
+    setIngredient("");
   };
 
   return (
@@ -21,6 +22,7 @@ const SearchPanel: React.FC<Props> = ({ setQuery }) => {
           shadow="md"
           marginRight="5"
           placeholder="Type your ingredient"
+          value={ingredient}
           onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setIngredient(e.target.value)}
         />
         <Button size="lg" colorScheme="green" type="submit">

@@ -1,7 +1,7 @@
 import { Recipe, Ingredient } from "../../utils/types";
 import RecipeCard from "./recipeCard";
 import IngredientCard from "./ingredientCard";
-import exampleRecipes from "./exampleRecipes";
+import mocs from "./mocs";
 import { Container, Heading, Flex } from "@chakra-ui/react";
 
 interface Props {
@@ -10,19 +10,21 @@ interface Props {
 }
 
 const ResultsList: React.FC<Props> = ({ items, type }) => {
-  const workingItems = items.length ? items : exampleRecipes;
+  const workingItems = items.length ? items : mocs[type];
   return (
     <Container
       maxW="100%"
       bg="gray.50"
-      padding="2rem 4.5rem"
+      padding="2.5rem"
       borderRightRadius="md"
       border="1px"
       borderColor="gray.200"
     >
       <Heading marginBottom="8">
-        {workingItems.length
+        {items.length
           ? "Here's what we found:"
+          : type === "ingredients"
+          ? "Some example ingredients:"
           : "Something inspiring while you're choosing an ingredient:"}
       </Heading>
       <Flex gridGap="10" flexWrap="wrap">
