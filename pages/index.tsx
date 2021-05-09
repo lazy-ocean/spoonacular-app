@@ -24,7 +24,8 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const getIngredients = async () => {
+    setLastSearchedItems(storageWorker(query, lastSearchedItems));
+    /*     const getIngredients = async () => {
       const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
         params: {
           metaInformation: true,
@@ -33,7 +34,7 @@ export default function Home() {
         },
       });
       setIngredients(response.data.results);
-      setLastSearchedItems(storageWorker(query, lastSearchedItems));
+
       router.push(
         {
           pathname: "/",
@@ -45,34 +46,8 @@ export default function Home() {
         { shallow: true }
       );
     };
-    if (query) getIngredients();
+    if (query) getIngredients(); */
   }, [query]);
-
-  /*   useEffect(() => {
-    const getRecipes = async () => {
-      const response = await axios(CACHED_SPOONACULAR_SEARCH, {
-        params: {
-          apiKey: SPOONACULAR_KEY,
-          query,
-          addRecipeNutrition: true,
-        },
-      });
-      setRecipes(response.data.results);
-
-      setLastSearchedItems(storageWorker(query, lastSearchedItems));
-      router.push(
-        {
-          pathname: "/",
-          query: {
-            query,
-          },
-        },
-        undefined,
-        { shallow: true }
-      );
-    };
-    if (query) getRecipes();
-  }, [query]); */
 
   useEffect(() => {
     let lastRequests = [];
@@ -82,6 +57,18 @@ export default function Home() {
     }
     setLastSearchedItems(lastRequests);
   }, []);
+
+  const getRecipes = async (ingredient: string) => {
+    const response = await axios(SPOONACULAR_SEARCH, {
+      params: {
+        apiKey: SPOONACULAR_KEY,
+        query: ingredient,
+        addRecipeNutrition: true,
+        number: 6,
+      },
+    });
+    setRecipes(response.data.results);
+  };
 
   return (
     <div className={styles.container}>
@@ -107,9 +94,9 @@ export default function Home() {
           <SearchPanel setQuery={setQuery} />
           <Flex marginBottom="8">
             <LastSearches lastSearchedItems={lastSearchedItems} setQuery={setQuery} />
-            <ResultsList items={ingredients} type="ingredients" />
+            <ResultsList items={ingredients} type="ingredients" getRecipes={getRecipes} />
           </Flex>
-          <ResultsList items={recipes} type="recipes" />
+          <ResultsList items={recipes} type="recipes" getRecipes={getRecipes} />
         </Container>
       </main>
     </div>

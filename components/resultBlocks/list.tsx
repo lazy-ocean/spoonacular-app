@@ -7,9 +7,10 @@ import { Container, Heading, Flex } from "@chakra-ui/react";
 interface Props {
   items: Recipe[] | Ingredient[];
   type: "ingredients" | "recipes";
+  getRecipes: (ingredient: string) => void;
 }
 
-const ResultsList: React.FC<Props> = ({ items, type }) => {
+const ResultsList: React.FC<Props> = ({ items, type, getRecipes }) => {
   const workingItems = items.length ? items : mocs[type];
   return (
     <Container
@@ -31,7 +32,7 @@ const ResultsList: React.FC<Props> = ({ items, type }) => {
         {type === "recipes"
           ? workingItems.map((recipe: any) => <RecipeCard recipe={recipe} key={recipe.id} />)
           : workingItems.map((ingredient: any) => (
-              <IngredientCard ingredient={ingredient} key={ingredient.id} />
+              <IngredientCard ingredient={ingredient} key={ingredient.id} getRecipes={getRecipes} />
             ))}
       </Flex>
     </Container>
