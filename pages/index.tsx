@@ -4,6 +4,7 @@ import Head from "next/head";
 import getConfig from "next/config";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
+import Header from "../components/header";
 import SearchPanel from "../components/searchPanel";
 import LastSearches from "../components/lastSearches";
 import ResultsList from "../components/resultBlocks/list";
@@ -24,8 +25,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    setLastSearchedItems(storageWorker(query, lastSearchedItems));
-    /*     const getIngredients = async () => {
+    const getIngredients = async () => {
       const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
         params: {
           metaInformation: true,
@@ -34,7 +34,7 @@ export default function Home() {
         },
       });
       setIngredients(response.data.results);
-
+      setLastSearchedItems(storageWorker(query, lastSearchedItems));
       router.push(
         {
           pathname: "/",
@@ -46,7 +46,7 @@ export default function Home() {
         { shallow: true }
       );
     };
-    if (query) getIngredients(); */
+    if (query) getIngredients();
   }, [query]);
 
   useEffect(() => {
@@ -77,22 +77,11 @@ export default function Home() {
         <meta name="description" content="Fetching data from Spoonacular API with Next.js" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Flex
-        width="100%"
-        as="header"
-        padding="1.5rem"
-        bg="green.500"
-        color="white"
-        marginBottom="1rem"
-      >
-        <Heading as="h1" className={styles.title}>
-          Spoonacular App 🥄
-        </Heading>
-      </Flex>
+      <Header />
       <main>
         <Container maxWidth="1640px">
           <SearchPanel setQuery={setQuery} />
-          <Flex marginBottom="8">
+          <Flex marginBottom="8" className={styles["main__ingredients"]}>
             <LastSearches lastSearchedItems={lastSearchedItems} setQuery={setQuery} />
             <ResultsList items={ingredients} type="ingredients" getRecipes={getRecipes} />
           </Flex>

@@ -12,7 +12,9 @@ const LastSearches: React.FC<Props> = ({ lastSearchedItems, setQuery }) => {
 
   return (
     <Box bg="green.50" padding="2.5rem" borderLeftRadius="md" border="1px" borderColor="gray.200">
-      <Heading marginBottom="3">Recently searched:</Heading>
+      <Heading marginBottom="3" fontSize={["xl", "xl", "2xl", "3xl"]}>
+        Recently searched:
+      </Heading>
       {lastSearchedItems.length ? (
         lastSearchedItems.map((searchedItem, i) => (
           <Text fontSize="md" key={`${searchedItem}-${i}`} paddingY="1">

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Flex, Input, Button } from "@chakra-ui/react";
+import styles from "../styles/Home.module.css";
 
 interface Props {
   setQuery: (query: string) => void;
@@ -25,7 +26,7 @@ const SearchPanel: React.FC<Props> = ({ setQuery }) => {
           value={ingredient}
           onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setIngredient(e.target.value)}
         />
-        <Button size="lg" colorScheme="green" type="submit">
+        <Button className={styles.btn} size="lg" colorScheme="green" type="submit">
           Search recipes
         </Button>
       </Flex>

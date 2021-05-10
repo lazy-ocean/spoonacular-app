@@ -1,1 +1,37 @@
+@media only screen and (max-width: 1600px) {
+  .card__recipe {
+    width: 30%;
+  }
+}
 
+@media only screen and (max-width: 1200px) {
+  .card__recipe {
+    flex-direction: column;
+  }
+  .card--recipe--txt {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .card--recipe--header {
+    text-align: center;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .card__recipe {
+    flex-direction: column;
+    width: 100%;
+  }
+  .card__ingredient {
+    flex-direction: column;
+    align-items: center;
+  }
+  .main__ingredients {
+    flex-direction: column;
+  }
+  .btn {
+    white-space: inherit !important;
+  }
+}

@@ -16,19 +16,19 @@ const ResultsList: React.FC<Props> = ({ items, type, getRecipes }) => {
     <Container
       maxW="100%"
       bg="gray.50"
-      padding="2.5rem"
+      p={[5, 5, "2.5rem", "2.5rem"]}
       borderRightRadius="md"
       border="1px"
       borderColor="gray.200"
     >
-      <Heading marginBottom="8">
+      <Heading marginBottom="8" fontSize={["xl", "xl", "2xl", "3xl"]}>
         {items.length
           ? "Here's what we found:"
           : type === "ingredients"
           ? "Some example ingredients:"
           : "Something inspiring while you're choosing an ingredient:"}
       </Heading>
-      <Flex gridGap="10" flexWrap="wrap">
+      <Flex gridGap={[4, 4, 6, 8]} flexWrap="wrap">
         {type === "recipes"
           ? workingItems.map((recipe: any) => <RecipeCard recipe={recipe} key={recipe.id} />)
           : workingItems.map((ingredient: any) => (

@@ -1,5 +1,6 @@
 import { Recipe } from "../../utils/types";
 import { Box, Heading, Image, Flex, Text } from "@chakra-ui/react";
+import styles from "../../styles/Home.module.css";
 
 interface Props {
   recipe: Recipe;
@@ -17,13 +18,15 @@ const RecipeCard: React.FC<Props> = ({ recipe }) => {
   return (
     <Box
       bg="white"
-      width="48%"
+      minW="48%"
       borderRadius="md"
       border="1px"
       borderColor="gray.200"
       d="flex"
       alignItems="center"
-      paddingRight="3"
+      p={[2, 3, 0, 0]}
+      pr={[0, 0, 3, 3]}
+      className={styles["card__recipe"]}
     >
       <Image
         src={image}
@@ -31,10 +34,11 @@ const RecipeCard: React.FC<Props> = ({ recipe }) => {
         boxSize="150px"
         objectFit="cover"
         borderRadius="md"
-        marginRight="5"
+        marginRight={[0, 3, 5, 5]}
+        marginBottom={[2, 2, 0, 0]}
       />
-      <Box>
-        <Heading size="md" marginBottom="3">
+      <Box className={styles["card--recipe--txt"]}>
+        <Heading fontSize="1.2rem" marginBottom="3" className={styles["card--recipe--header"]}>
           {title}
         </Heading>
         <Flex gridGap="8">
