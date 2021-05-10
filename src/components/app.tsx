@@ -51,31 +51,29 @@ const App = () => {
   };
 
   const getIngredients = async (query: string) => {
-    setIngredientsLoading(true);
-    if (query === "") {
-      setIngredients([]);
-      setIngredientsLoading(false);
-      return;
-    }
-    try {
-      const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
-        params: {
-          metaInformation: true,
-          apiKey: SPOONACULAR_KEY,
-          query,
-        },
-      });
-      setIngredients(response.data.results);
-      addLastSearchedItem(query);
-      setIngredientsLoading(false);
-    } catch (e) {
-      setModal(true);
-      if (e.response?.status === 402) {
-        setModalType("limit");
-      } else {
-        setModalType("ingredients");
+    if (query !== "") {
+      setIngredientsLoading(true);
+      try {
+        const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
+          params: {
+            metaInformation: true,
+            apiKey: SPOONACULAR_KEY,
+            query,
+          },
+        });
+        setIngredients(response.data.results);
+        addLastSearchedItem(query);
+      } catch (e) {
+        setModal(true);
+        if (e.response?.status === 402) {
+          setModalType("limit");
+        } else {
+          setModalType("ingredients");
+        }
+      } finally {
+        setIngredientsLoading(false);
       }
-    }
+    } else setIngredients([]);
   };
 
   const getRecipes = async (ingredient: string) => {
@@ -95,12 +93,12 @@ const App = () => {
       } else {
         setRecipes(response.data.results);
       }
-      setRecipesLoading(false);
     } catch (e) {
       setModal(true);
       setModalType("error");
+    } finally {
+      setRecipesLoading(false);
     }
-    setRecipesLoading(false);
   };
 
   return (
