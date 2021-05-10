@@ -96,9 +96,14 @@ const App = () => {
         <SearchPanel setQuery={setQuery} />
         <Flex marginBottom="8" className={styles["main__ingredients"]}>
           <LastSearches lastSearchedItems={lastSearchedItems} setQuery={setQuery} />
-          <ResultsList items={ingredients} type="ingredients" getRecipes={getRecipes} />
+          <ResultsList
+            items={ingredients}
+            type="ingredients"
+            getRecipes={getRecipes}
+            query={query}
+          />
         </Flex>
-        <ResultsList items={recipes} type="recipes" getRecipes={getRecipes} />
+        <ResultsList items={recipes} type="recipes" getRecipes={getRecipes} query={query} />
       </Container>
       <ModalWindow modal={modal} setModal={setModal} type={modalType} />
     </main>

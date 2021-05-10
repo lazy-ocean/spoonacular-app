@@ -11,9 +11,20 @@ const LastSearches: React.FC<Props> = ({ lastSearchedItems, setQuery }) => {
   };
 
   return (
-    <Box bg="green.50" padding="2.5rem" borderLeftRadius="md" border="1px" borderColor="gray.200">
+    <Box
+      bg="green.50"
+      padding="2.5rem"
+      borderLeftRadius="md"
+      borderBottomRightRadius="none"
+      borderTopRightRadius={["md", "md", "md", "none"]}
+      borderBottomLeftRadius={["none", "none", "none", "md"]}
+      border="1px"
+      borderRight={["1px", "1px", "1px", 0]}
+      borderBottom={[0, 0, 0, "1px"]}
+      borderColor={["gray.200", "gray.200", "gray.200", "gray.200"]}
+    >
       <Heading marginBottom="3" fontSize={["xl", "xl", "2xl", "3xl"]}>
-        Recently searched:
+        Recently searched
       </Heading>
       {lastSearchedItems.length ? (
         lastSearchedItems.map((searchedItem, i) => (

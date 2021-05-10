@@ -2,7 +2,9 @@ import { Flex, Heading } from "@chakra-ui/react";
 
 const Header = () => (
   <Flex width="100%" as="header" padding="1.5rem" bg="green.500" color="white" marginBottom="1rem">
-    <Heading as="h1">Spoonacular App 🥄</Heading>
+    <Heading as="h1" size="lg">
+      Spoonacular App 🥄
+    </Heading>
   </Flex>
 );
 
