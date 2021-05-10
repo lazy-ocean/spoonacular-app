@@ -1,5 +1,7 @@
-import { Ingredient } from "../../../types/domain";
+import React from "react";
 import { Box, Heading, Image, Link } from "@chakra-ui/react";
+import { Ingredient } from "../../../types/domain";
+
 import styles from "../../../styles/Home.module.css";
 
 interface Props {

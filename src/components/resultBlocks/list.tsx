@@ -1,8 +1,9 @@
+import React from "react";
+import { Container, Heading, Flex, Text } from "@chakra-ui/react";
 import { Recipe, Ingredient } from "../../types/domain";
 import RecipeCard from "./cards/recipeCard";
 import IngredientCard from "./cards/ingredientCard";
 import mocks from "./mocks";
-import { Container, Heading, Flex, Text } from "@chakra-ui/react";
 import Spinner from "../../components/spinner";
 
 interface Props {

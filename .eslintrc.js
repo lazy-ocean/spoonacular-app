@@ -1,0 +1,36 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+    "cypress/globals": true,
+  },
+  extends: ["plugin:react/recommended", "airbnb", "prettier"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    sourceType: "module",
+  },
+  plugins: ["react", "@typescript-eslint", "cypress", "chai-friendly"],
+  rules: {
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "react/jsx-filename-extension": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "react/react-in-jsx-scope": "off",
+    "dot-notation": "off",
+    "react/prop-types": "off",
+    "react/no-array-index-key": "warn",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-else-return": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "no-nested-ternary": "warn",
+    "no-unused-expressions": 0,
+    "chai-friendly/no-unused-expressions": 2,
+  },
+};

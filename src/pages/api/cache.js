@@ -1,6 +1,6 @@
 import axios from "axios";
-import cache from "../../utils/cacheInit";
 import getConfig from "next/config";
+import cache from "../../utils/cacheInit";
 
 const {
   publicRuntimeConfig: { SPOONACULAR_INGREDIENTS },

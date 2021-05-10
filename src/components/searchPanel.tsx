@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Flex, Input, Button } from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
 

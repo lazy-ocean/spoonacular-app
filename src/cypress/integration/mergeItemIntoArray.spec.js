@@ -1,13 +1,13 @@
 import mergeItemIntoArray from "../../utils/mergeItemIntoArray";
 
-describe("Unit Test mergeItemIntoArray", function () {
-  it("simple case", function () {
+describe("Unit Test mergeItemIntoArray", () => {
+  it("simple case", () => {
     expect(mergeItemIntoArray("test", ["one", "two"])).to.eql(["test", "one", "two"]);
   });
-  it("empty array", function () {
+  it("empty array", () => {
     expect(mergeItemIntoArray("test", [])).to.eql(["test"]);
   });
-  it("long array", function () {
+  it("long array", () => {
     expect(
       mergeItemIntoArray("test", [
         "one",
@@ -23,7 +23,7 @@ describe("Unit Test mergeItemIntoArray", function () {
       ])
     ).to.eql(["test", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]);
   });
-  it("repeated item", function () {
+  it("repeated item", () => {
     expect(mergeItemIntoArray("test", ["one", "test"])).to.eql(["test", "one"]);
   });
 });

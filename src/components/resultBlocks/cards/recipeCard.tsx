@@ -1,5 +1,7 @@
-import { Recipe } from "../../../types/domain";
+import React from "react";
 import { Box, Heading, Image, Flex, Text } from "@chakra-ui/react";
+import { Recipe } from "../../../types/domain";
+
 import styles from "../../../styles/Home.module.css";
 
 interface Props {

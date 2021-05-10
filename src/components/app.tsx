@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { Flex, Container } from "@chakra-ui/react";
 import getConfig from "next/config";
 import axios from "axios";
 import { useRouter } from "next/router";
-import styles from "../styles/Home.module.css";
 import SearchPanel from "../components/searchPanel";
 import LastSearches from "../components/lastSearches";
 import ResultsList from "../components/resultBlocks/list";
 import ModalWindow from "../components/modal";
 import useLastSearchItems from "../hooks/useLastSearchItems";
 import { Recipe, Ingredient } from "../types/domain";
-import { Flex, Container } from "@chakra-ui/react";
+
+import styles from "../styles/Home.module.css";
 
 const {
   publicRuntimeConfig: { SPOONACULAR_KEY, CACHED_SPOONACULAR_INGREDIENTS, SPOONACULAR_SEARCH },
@@ -30,39 +31,19 @@ const App = () => {
   const router = useRouter();
   const searchParam = router.query[QUERY_SEARCH_PARAM]?.toString() || "";
 
-  useEffect(() => {
-    if (router.isReady) {
-      setQuery(searchParam);
-      getIngredients(searchParam);
-    }
-  }, [router.isReady, searchParam]);
-
-  const setSearchParam = (q: string) => {
-    router.push(
-      {
-        pathname: "/",
-        query: {
-          [QUERY_SEARCH_PARAM]: q,
-        },
-      },
-      undefined,
-      { shallow: true }
-    );
-  };
-
-  const getIngredients = async (query: string) => {
-    if (query !== "") {
+  const getIngredients = async (q: string) => {
+    if (q !== "") {
       setIngredientsLoading(true);
       try {
         const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
           params: {
             metaInformation: true,
             apiKey: SPOONACULAR_KEY,
-            query,
+            query: q,
           },
         });
         setIngredients(response.data.results);
-        addLastSearchedItem(query);
+        addLastSearchedItem(q);
       } catch (e) {
         setModal(true);
         if (e.response?.status === 402) {
@@ -99,6 +80,26 @@ const App = () => {
     } finally {
       setRecipesLoading(false);
     }
+  };
+
+  useEffect(() => {
+    if (router.isReady) {
+      setQuery(searchParam);
+      getIngredients(searchParam);
+    }
+  }, [router.isReady, searchParam]);
+
+  const setSearchParam = (q: string) => {
+    router.push(
+      {
+        pathname: "/",
+        query: {
+          [QUERY_SEARCH_PARAM]: q,
+        },
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   return (
