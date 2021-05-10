@@ -10,7 +10,8 @@ import LastSearches from "../components/lastSearches";
 import ResultsList from "../components/resultBlocks/list";
 import storageWorker from "../utils/storageWorker";
 import { Recipe, Ingredient } from "../utils/types";
-import { Flex, Container, Heading } from "@chakra-ui/react";
+import { Flex, Container } from "@chakra-ui/react";
+import ModalWindow from "../components/modal";
 
 const {
   publicRuntimeConfig: { SPOONACULAR_KEY, CACHED_SPOONACULAR_INGREDIENTS, SPOONACULAR_SEARCH },
@@ -21,30 +22,41 @@ export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [lastSearchedItems, setLastSearchedItems] = useState<string[]>([]);
+  const [modal, setModal] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<string>("");
 
   const router = useRouter();
 
   useEffect(() => {
     const getIngredients = async () => {
-      const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
-        params: {
-          metaInformation: true,
-          apiKey: SPOONACULAR_KEY,
-          query,
-        },
-      });
-      setIngredients(response.data.results);
-      setLastSearchedItems(storageWorker(query, lastSearchedItems));
-      router.push(
-        {
-          pathname: "/",
-          query: {
+      try {
+        const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
+          params: {
+            metaInformation: true,
+            apiKey: SPOONACULAR_KEY,
             query,
           },
-        },
-        undefined,
-        { shallow: true }
-      );
+        });
+        setIngredients(response.data.results);
+        setLastSearchedItems(storageWorker(query, lastSearchedItems));
+        router.push(
+          {
+            pathname: "/",
+            query: {
+              query,
+            },
+          },
+          undefined,
+          { shallow: true }
+        );
+      } catch (e) {
+        setModal(true);
+        if (e.response?.status === 402) {
+          setModalType("limit");
+        } else {
+          setModalType("ingredients");
+        }
+      }
     };
     if (query) getIngredients();
   }, [query]);
@@ -59,15 +71,25 @@ export default function Home() {
   }, []);
 
   const getRecipes = async (ingredient: string) => {
-    const response = await axios(SPOONACULAR_SEARCH, {
-      params: {
-        apiKey: SPOONACULAR_KEY,
-        query: ingredient,
-        addRecipeNutrition: true,
-        number: 6,
-      },
-    });
-    setRecipes(response.data.results);
+    try {
+      const response = await axios(SPOONACULAR_SEARCH, {
+        params: {
+          apiKey: SPOONACULAR_KEY,
+          query: ingredient,
+          addRecipeNutrition: true,
+          number: 6,
+        },
+      });
+      if (!response.data.results.length) {
+        setModal(true);
+        setModalType("ingredients");
+      } else {
+        setRecipes(response.data.results);
+      }
+    } catch (e) {
+      setModal(true);
+      setModalType("error");
+    }
   };
 
   return (
@@ -87,6 +109,7 @@ export default function Home() {
           </Flex>
           <ResultsList items={recipes} type="recipes" getRecipes={getRecipes} />
         </Container>
+        <ModalWindow modal={modal} setModal={setModal} type={modalType} />
       </main>
     </div>
   );
