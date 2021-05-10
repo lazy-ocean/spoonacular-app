@@ -1,4 +1,4 @@
-import { Ingredient } from "../../../utils/types";
+import { Ingredient } from "../../../types/domain";
 import { Box, Heading, Image, Link } from "@chakra-ui/react";
 import styles from "../../../styles/Home.module.css";
 

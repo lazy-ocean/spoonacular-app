@@ -1,4 +1,4 @@
-import { Recipe } from "../../../utils/types";
+import { Recipe } from "../../../types/domain";
 import { Box, Heading, Image, Flex, Text } from "@chakra-ui/react";
 import styles from "../../../styles/Home.module.css";
 

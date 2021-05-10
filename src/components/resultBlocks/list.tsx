@@ -1,4 +1,4 @@
-import { Recipe, Ingredient } from "../../utils/types";
+import { Recipe, Ingredient } from "../../types/domain";
 import RecipeCard from "./cards/recipeCard";
 import IngredientCard from "./cards/ingredientCard";
 import mocs from "./mocs";

@@ -8,7 +8,7 @@ import LastSearches from "../components/lastSearches";
 import ResultsList from "../components/resultBlocks/list";
 import ModalWindow from "../components/modal";
 import useLastSearchItems from "../hooks/useLastSearchItems";
-import { Recipe, Ingredient } from "../utils/types";
+import { Recipe, Ingredient } from "../types/domain";
 import { Flex, Container } from "@chakra-ui/react";
 
 const {
