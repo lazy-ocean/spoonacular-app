@@ -31,7 +31,6 @@ const LastSearches: React.FC<Props> = ({ lastSearchedItems, setQuery }) => {
         lastSearchedItems.map((searchedItem, i) => (
           <Text fontSize="md" key={`${searchedItem}-${i}`} paddingY="1">
             <Link
-              href="#"
               fontSize="xl"
               onClick={() => handleClick(searchedItem)}
               data-cy="recently-searched-item"

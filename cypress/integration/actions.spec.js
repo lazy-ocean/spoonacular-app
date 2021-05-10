@@ -16,15 +16,11 @@ context("Actions", () => {
     cy.get("[data-cy=search-form]").find("[data-cy=input]").type("apple");
     cy.get("[data-cy=search-form]").submit();
     cy.wait(2000);
+    cy.get("[data-cy=search-form]").clear();
     cy.get("[data-cy=search-form]").find("[data-cy=input]").type("banana");
     cy.get("[data-cy=search-form]").submit();
     cy.wait(2000);
     cy.get("[data-cy=recently-searched-item]").first().should("contain", "banana");
-  });
-
-  it("clears input", () => {
-    cy.get("[data-cy=search-form]").find("[data-cy=input]").type("apple");
-    cy.get("[data-cy=search-form]").submit().should("have.value", "");
   });
 
   it("ingredients list is correct", () => {

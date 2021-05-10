@@ -3,29 +3,28 @@ import { Flex, Input, Button } from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
 
 interface Props {
-  setQuery: (query: string) => void;
+  onChange: (value: string) => void;
+  onSubmit: (e: React.SyntheticEvent) => void;
+  value: string;
 }
 
-const SearchPanel: React.FC<Props> = ({ setQuery }) => {
-  const [ingredient, setIngredient] = useState<string>("");
-
-  const submitSearch = (e: React.SyntheticEvent) => {
+const SearchPanel: React.FC<Props> = ({ onSubmit, onChange, value }) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setQuery(ingredient);
-    setIngredient("");
+    onSubmit(e);
   };
 
   return (
-    <form onSubmit={submitSearch} data-cy="search-form">
+    <form onSubmit={handleSubmit} data-cy="search-form">
       <Flex marginBottom="8">
         <Input
           size="lg"
           shadow="md"
           marginRight="5"
           placeholder="Type your ingredient"
-          value={ingredient}
+          value={value}
           data-cy="input"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setIngredient(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => onChange(e.target.value)}
         />
         <Button
           className={styles.btn}
