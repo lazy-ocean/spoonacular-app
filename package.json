@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:open": "cypress open --project src",
+    "cypress:run": "cypress run --project src"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.1",
