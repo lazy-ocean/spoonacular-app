@@ -1,7 +1,7 @@
 import { Recipe, Ingredient } from "../../types/domain";
 import RecipeCard from "./cards/recipeCard";
 import IngredientCard from "./cards/ingredientCard";
-import mocs from "./mocs";
+import mocks from "./mocks";
 import { Container, Heading, Flex, Text } from "@chakra-ui/react";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ResultsList: React.FC<Props> = ({ items, type, getRecipes, query }) => {
-  const workingItems = items.length ? items : mocs[type];
+  const workingItems = items.length ? items : mocks[type];
   const heading = (
     <Heading fontSize={["xl", "xl", "2xl", "3xl"]}>
       {items.length

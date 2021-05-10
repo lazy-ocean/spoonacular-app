@@ -1,4 +1,4 @@
-const mocs = {
+const mocks = {
   ingredients: [
     {
       id: 19400,
@@ -42,4 +42,4 @@ const mocs = {
   ],
 };
 
-export default mocs;
+export default mocks;
