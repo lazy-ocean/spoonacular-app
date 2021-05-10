@@ -38,7 +38,12 @@ const RecipeCard: React.FC<Props> = ({ recipe }) => {
         marginBottom={[2, 2, 0, 0]}
       />
       <Box className={styles["card--recipe--txt"]}>
-        <Heading fontSize="1.2rem" marginBottom="3" className={styles["card--recipe--header"]}>
+        <Heading
+          fontSize="1.2rem"
+          marginBottom="3"
+          className={styles["card--recipe--header"]}
+          data-cy="recipe"
+        >
           {title}
         </Heading>
         <Flex gridGap="8">

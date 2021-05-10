@@ -10,6 +10,7 @@ User can search food ingredients by even partial query and look up recipes for t
 - **[Chakra UI](https://chakra-ui.com/)**: UI component library
 - **[spoonacular API](https://spoonacular.com/food-api)**: REST API for food ingredients and recipes search
 - **[lru-cache](https://www.npmjs.com/package/lru-cache)**: cache object for API requests optimization.
+- **[Cypress](https://www.cypress.io/)**: end-to-end testing.
 
 ## Deploy link
 

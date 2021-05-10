@@ -30,7 +30,9 @@ const IngredientCard: React.FC<Props> = ({ ingredient, getRecipes }) => {
         mr={[0, 0, 3, 3]}
       />
       <Heading fontSize={{ md: "md", sm: "sm" }} marginBottom="3">
-        <Link onClick={() => getRecipes(name)}>{name}</Link>
+        <Link onClick={() => getRecipes(name)} data-cy="ingredient">
+          {name}
+        </Link>
       </Heading>
     </Box>
   );

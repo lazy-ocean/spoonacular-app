@@ -22,6 +22,7 @@ const LastSearches: React.FC<Props> = ({ lastSearchedItems, setQuery }) => {
       borderRight={["1px", "1px", "1px", 0]}
       borderBottom={[0, 0, 0, "1px"]}
       borderColor={["gray.200", "gray.200", "gray.200", "gray.200"]}
+      data-cy="recently-searched"
     >
       <Heading marginBottom="3" fontSize={["xl", "xl", "2xl", "3xl"]}>
         Recently searched
@@ -29,7 +30,12 @@ const LastSearches: React.FC<Props> = ({ lastSearchedItems, setQuery }) => {
       {lastSearchedItems.length ? (
         lastSearchedItems.map((searchedItem, i) => (
           <Text fontSize="md" key={`${searchedItem}-${i}`} paddingY="1">
-            <Link href="#" fontSize="xl" onClick={() => handleClick(searchedItem)}>
+            <Link
+              href="#"
+              fontSize="xl"
+              onClick={() => handleClick(searchedItem)}
+              data-cy="recently-searched-item"
+            >
               {searchedItem}
             </Link>
           </Text>

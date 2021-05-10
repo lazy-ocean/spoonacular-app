@@ -16,7 +16,7 @@ const SearchPanel: React.FC<Props> = ({ setQuery }) => {
   };
 
   return (
-    <form onSubmit={submitSearch}>
+    <form onSubmit={submitSearch} data-cy="search-form">
       <Flex marginBottom="8">
         <Input
           size="lg"
@@ -24,9 +24,16 @@ const SearchPanel: React.FC<Props> = ({ setQuery }) => {
           marginRight="5"
           placeholder="Type your ingredient"
           value={ingredient}
+          data-cy="input"
           onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setIngredient(e.target.value)}
         />
-        <Button className={styles.btn} size="lg" colorScheme="green" type="submit">
+        <Button
+          className={styles.btn}
+          size="lg"
+          colorScheme="green"
+          type="submit"
+          data-cy="input-btn"
+        >
           Search recipes
         </Button>
       </Flex>
