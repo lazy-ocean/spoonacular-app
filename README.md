@@ -20,13 +20,21 @@ User can search food ingredients by even partial query and look up recipes for t
 
 1. Clone this repo
 
-2. Create `.env` file and add your Spoonacular API key:
+2. Install all dependencies:
+
+```
+$ npm install
+# or
+$ yarn
+```
+
+3. Create `.env` file and add your Spoonacular API key:
 
 ```
 echo 'SPOONACULAR_KEY=<your key>' >> .env
 ```
 
-3. Run the deployment server
+4. Run the deployment server
 
 ```
 $ npm run dev
@@ -34,4 +42,4 @@ $ npm run dev
 $ yarn dev
 ```
 
-4. Your app is served at http://localhost:3000/
+5. Your app is served at http://localhost:3000/
