@@ -49,6 +49,10 @@ const App = () => {
   };
 
   const getIngredients = async (query: string) => {
+    if (query === "") {
+      setIngredients([]);
+      return;
+    }
     try {
       const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
         params: {
