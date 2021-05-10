@@ -1,6 +1,6 @@
 import { Recipe, Ingredient } from "../../utils/types";
-import RecipeCard from "./recipeCard";
-import IngredientCard from "./ingredientCard";
+import RecipeCard from "./cards/recipeCard";
+import IngredientCard from "./cards/ingredientCard";
 import mocs from "./mocs";
 import { Container, Heading, Flex } from "@chakra-ui/react";
 

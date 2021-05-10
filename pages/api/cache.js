@@ -36,10 +36,8 @@ const cacheWrapper = async (req, res) => {
       return res.status(status).json(data);
     }
   } catch (e) {
-    // TODO
-    console.log(e);
-    /* const { status, data } = _get(error, 'response', {})
-    return res.status(status).json(data) */
+    const { status, data } = e.response;
+    return res.status(status).json(data);
   }
 };
 

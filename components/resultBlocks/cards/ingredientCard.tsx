@@ -1,6 +1,6 @@
-import { Ingredient } from "../../utils/types";
+import { Ingredient } from "../../../utils/types";
 import { Box, Heading, Image, Link } from "@chakra-ui/react";
-import styles from "../../styles/Home.module.css";
+import styles from "../../../styles/Home.module.css";
 
 interface Props {
   ingredient: Ingredient;
@@ -9,7 +9,6 @@ interface Props {
 
 const IngredientCard: React.FC<Props> = ({ ingredient, getRecipes }) => {
   const { image, name } = ingredient;
-
   return (
     <Box
       bg="white"
