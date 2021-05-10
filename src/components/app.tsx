@@ -24,6 +24,8 @@ const App = () => {
   const [lastSearchedItems, addLastSearchedItem] = useLastSearchItems();
   const [modal, setModal] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string>("");
+  const [recipesLoading, setRecipesLoading] = useState<boolean>(false);
+  const [ingredientsLoading, setIngredientsLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const searchParam = router.query[QUERY_SEARCH_PARAM]?.toString() || "";
@@ -49,8 +51,10 @@ const App = () => {
   };
 
   const getIngredients = async (query: string) => {
+    setIngredientsLoading(true);
     if (query === "") {
       setIngredients([]);
+      setIngredientsLoading(false);
       return;
     }
     try {
@@ -63,6 +67,7 @@ const App = () => {
       });
       setIngredients(response.data.results);
       addLastSearchedItem(query);
+      setIngredientsLoading(false);
     } catch (e) {
       setModal(true);
       if (e.response?.status === 402) {
@@ -74,6 +79,7 @@ const App = () => {
   };
 
   const getRecipes = async (ingredient: string) => {
+    setRecipesLoading(true);
     try {
       const response = await axios(SPOONACULAR_SEARCH, {
         params: {
@@ -89,10 +95,12 @@ const App = () => {
       } else {
         setRecipes(response.data.results);
       }
+      setRecipesLoading(false);
     } catch (e) {
       setModal(true);
       setModalType("error");
     }
+    setRecipesLoading(false);
   };
 
   return (
@@ -112,9 +120,16 @@ const App = () => {
             type="ingredients"
             getRecipes={getRecipes}
             query={searchParam}
+            isLoading={ingredientsLoading}
           />
         </Flex>
-        <ResultsList items={recipes} type="recipes" getRecipes={getRecipes} query={query} />
+        <ResultsList
+          items={recipes}
+          type="recipes"
+          getRecipes={getRecipes}
+          query={searchParam}
+          isLoading={recipesLoading}
+        />
       </Container>
       <ModalWindow modal={modal} setModal={setModal} type={modalType} />
     </main>

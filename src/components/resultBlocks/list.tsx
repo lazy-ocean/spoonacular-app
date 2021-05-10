@@ -3,15 +3,17 @@ import RecipeCard from "./cards/recipeCard";
 import IngredientCard from "./cards/ingredientCard";
 import mocks from "./mocks";
 import { Container, Heading, Flex, Text } from "@chakra-ui/react";
+import Spinner from "../../components/spinner";
 
 interface Props {
   items: Recipe[] | Ingredient[];
   type: "ingredients" | "recipes";
   query: string;
+  isLoading: boolean;
   getRecipes: (ingredient: string) => void;
 }
 
-const ResultsList: React.FC<Props> = ({ items, type, getRecipes, query }) => {
+const ResultsList: React.FC<Props> = ({ items, type, getRecipes, query, isLoading }) => {
   const workingItems = items.length ? items : mocks[type];
   const heading = (
     <Heading fontSize={["xl", "xl", "2xl", "3xl"]}>
@@ -34,17 +36,27 @@ const ResultsList: React.FC<Props> = ({ items, type, getRecipes, query }) => {
       border="1px"
       borderColor="gray.200"
     >
-      {heading}
-      {type === "ingredients" ? (
-        <Text marginTop="3">Click on ingredient to search for recipes</Text>
-      ) : null}
-      <Flex gridGap={[4, 4, 6, 8]} flexWrap="wrap" marginTop="6">
-        {type === "recipes"
-          ? workingItems.map((recipe: any) => <RecipeCard recipe={recipe} key={recipe.id} />)
-          : workingItems.map((ingredient: any) => (
-              <IngredientCard ingredient={ingredient} key={ingredient.id} getRecipes={getRecipes} />
-            ))}
-      </Flex>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          {heading}
+          {type === "ingredients" ? (
+            <Text marginTop="3">Click on ingredient to search for recipes</Text>
+          ) : null}
+          <Flex gridGap={[4, 4, 6, 8]} flexWrap="wrap" marginTop="6">
+            {type === "recipes"
+              ? workingItems.map((recipe: any) => <RecipeCard recipe={recipe} key={recipe.id} />)
+              : workingItems.map((ingredient: any) => (
+                  <IngredientCard
+                    ingredient={ingredient}
+                    key={ingredient.id}
+                    getRecipes={getRecipes}
+                  />
+                ))}{" "}
+          </Flex>
+        </>
+      )}
     </Container>
   );
 };
