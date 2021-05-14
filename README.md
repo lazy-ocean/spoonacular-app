@@ -3,6 +3,7 @@
 This is a [Next.js](https://nextjs.org/) project made as an interview assignment for Junior Frontend Developer position at **AirHelp**.
 
 User can search food ingredients by even partial query and look up recipes for the chosen ingredient.
+Spoonacular API has a limit of 150 requests a day, so searched ingredients are **cached**. Last ten requests are also stored in the local storage and shown as links in a separate panel.
 
 ## Stack and tools
 
