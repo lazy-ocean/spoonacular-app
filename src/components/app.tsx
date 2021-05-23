@@ -13,7 +13,12 @@ import { Recipe, Ingredient } from "../types/domain";
 import styles from "../styles/Home.module.css";
 
 const {
-  publicRuntimeConfig: { SPOONACULAR_KEY, CACHED_SPOONACULAR_INGREDIENTS, SPOONACULAR_SEARCH },
+  publicRuntimeConfig: {
+    SPOONACULAR_KEY,
+    CACHED_SPOONACULAR_INGREDIENTS,
+    SPOONACULAR_SEARCH,
+    SPOONACULAR_MEALS,
+  },
 } = getConfig();
 
 const QUERY_SEARCH_PARAM = "query";
@@ -37,8 +42,6 @@ const App = () => {
       try {
         const response = await axios(CACHED_SPOONACULAR_INGREDIENTS, {
           params: {
-            metaInformation: true,
-            apiKey: SPOONACULAR_KEY,
             query: q,
           },
         });
@@ -60,12 +63,9 @@ const App = () => {
   const getRecipes = async (ingredient: string) => {
     setRecipesLoading(true);
     try {
-      const response = await axios(SPOONACULAR_SEARCH, {
+      const response = await axios(SPOONACULAR_MEALS, {
         params: {
-          apiKey: SPOONACULAR_KEY,
           query: ingredient,
-          addRecipeNutrition: true,
-          number: 6,
         },
       });
       if (!response.data.results.length) {

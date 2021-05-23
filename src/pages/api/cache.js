@@ -3,7 +3,7 @@ import getConfig from "next/config";
 import cache from "../../utils/cacheInit";
 
 const {
-  publicRuntimeConfig: { SPOONACULAR_INGREDIENTS },
+  publicRuntimeConfig: { SPOONACULAR_INGREDIENTS, SPOONACULAR_KEY },
 } = getConfig();
 
 const cacheWrapper = async (req, res) => {
@@ -21,17 +21,20 @@ const cacheWrapper = async (req, res) => {
   try {
     console.log("adding new ingredient");
     const { status, data } = await axios(SPOONACULAR_INGREDIENTS, {
-      params: req.query,
+      params: {
+        metaInformation: true,
+        apiKey: SPOONACULAR_KEY,
+        query: req.query.query,
+      },
     });
-
-    if (res.statusCode === 200) {
+    if (status === 200) {
       if (req.cache) {
         req.cache.set(key, {
           data,
         });
       }
       res.setHeader("X-Cache", "MISS");
-      return res.json(data);
+      return res.status(200).json(data);
     } else {
       return res.status(status).json(data);
     }
